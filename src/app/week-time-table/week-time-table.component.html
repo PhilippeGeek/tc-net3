@@ -1,3 +1,17 @@
-<p>
-  week-time-table works!
-</p>
+<div class="timetable">
+
+  <div class="column">
+    <div class="column-header"></div>
+    <div class="column-line" *ngFor="let hour of [8,9,10,11,12,13,14,15,16,17,18,19]">
+      {{hour}}h - {{hour+1}}h
+    </div>
+  </div>
+  <div class="column" *ngFor="let weekDay of [0,1,2,3,4]">
+    <div class="column-header">{{weekDays[weekDay]}}</div>
+    <div class="column-line" *ngFor="let hour of [8,9,10,11,12,13,14,15,16,17,18,19]">
+      ?
+    </div>
+
+  </div>
+
+</div>

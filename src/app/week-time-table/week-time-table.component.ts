@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./week-time-table.component.scss']
 })
 export class WeekTimeTableComponent implements OnInit {
+  weekDays = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi'];
 
   constructor() { }
 

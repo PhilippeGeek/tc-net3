@@ -1,0 +1,25 @@
+.timetable{
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  .column{
+    width: 16.667%;
+
+    .column-header {
+      height: 6em;
+      border-bottom: 1px solid black;
+    }
+
+    .column-line {
+      height: 4em;
+      text-align: center;
+      border-bottom: 1px solid lightgray;
+      margin-bottom: 5px;
+      padding-top: 1em;
+    }
+
+  }
+
+}
