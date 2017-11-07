@@ -1,7 +1,10 @@
 <div class="timetable">
 
   <div class="column">
-    <div class="column-header"></div>
+    <div class="column-header">
+      <span>Semaine</span>
+      <span>{{asWeek(date)}}</span>
+    </div>
     <div class="column-line" *ngFor="let hour of [8,9,10,11,12,13,14,15,16,17,18,19]">
       {{hour}}h - {{hour+1}}h
     </div>
