@@ -11,12 +11,13 @@ export class WeekTimeTableComponent implements OnInit {
   date: Date = new Date();
 
   constructor() {
-    const [year, week]: number[2] = getWeekNumber(this.date);
+    const [year, week]: number[] = getWeekNumber(this.date);
     this.date = getDateOfISOWeek(week, year);
   }
 
   ngOnInit() {
   }
+
   asWeek(date: Date): number {
     return getWeekNumber(date)[1];
   }

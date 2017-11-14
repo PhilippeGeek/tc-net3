@@ -1,10 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { RouterModule, Routes } from '@angular/router';
-import { WeekTimeTableComponent } from './week-time-table/week-time-table.component';
-import { SetupComponent } from './setup/setup.component';
+import {AppComponent} from './app.component';
+import {RouterModule, Routes} from '@angular/router';
+import {WeekTimeTableComponent} from './week-time-table/week-time-table.component';
+import {SetupComponent} from './setup/setup.component';
+import {CoursesService} from './courses.service';
+import {FormsModule} from '@angular/forms';
+import { CoursesFilterPipe } from './setup/courses-filter.pipe';
 
 const appRoutes: Routes = [
   {path: 'week', component: WeekTimeTableComponent},
@@ -16,16 +19,21 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     WeekTimeTableComponent,
-    SetupComponent
+    SetupComponent,
+    CoursesFilterPipe
   ],
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      {enableTracing: true} // <-- debugging purposes only
     ),
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    CoursesService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

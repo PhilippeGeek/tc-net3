@@ -10,10 +10,10 @@ export function getDateOfISOWeek(w: number, y: number): Date {
   return ISOweekStart;
 }
 
-export function getWeekNumber(d: Date): number[2] {
+export function getWeekNumber(d: Date): number[] {
   d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
   d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
   const yearStart: Date = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  const weekNo: number = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7);
+  const weekNo: number = Math.ceil(( ( (d.valueOf() - yearStart.valueOf()) / 86400000) + 1) / 7);
   return [d.getUTCFullYear(), weekNo];
 }
