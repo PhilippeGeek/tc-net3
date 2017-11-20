@@ -28,6 +28,8 @@ export class SetupComponent implements OnInit {
   constructor(
     private coursesService: CoursesService,
     ) {
+    this.filter.year = localStorage.getItem('year') || '3';
+    this.filter.section = localStorage.getItem('section') || 'TC';
   }
 
   getCourses(): void {
@@ -38,6 +40,10 @@ export class SetupComponent implements OnInit {
           this.years.add(c.year);
           this.sections.add(c.section);
         }
+        this.years = new Set(Array.from(this.years).sort());
+        this.sections = new Set(Array.from(this.sections).sort());
+        this.filter.year = localStorage.getItem('year') || '3';
+        this.filter.section = localStorage.getItem('section') || 'TC';
       },
       (err) => this.getCourses()
     );
@@ -96,8 +102,6 @@ export class SetupComponent implements OnInit {
         this.selection.set(selected[i], true);
       }
     }
-    this.filter.year = localStorage.getItem('year') || '3';
-    this.filter.section = localStorage.getItem('section') || 'TC';
     this.getCourses();
   }
 
