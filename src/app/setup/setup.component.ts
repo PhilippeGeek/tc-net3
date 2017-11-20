@@ -17,7 +17,7 @@ export class SetupComponent implements OnInit {
 
   years: Set<number> = new Set();
   sections: Set<string> = new Set();
-  courses: Course[];
+  courses: Set<Course>;
   selection: Map<string, boolean> = new Map();
   filter: CourseFilter = {
     year: '4',
@@ -31,14 +31,19 @@ export class SetupComponent implements OnInit {
   }
 
   getCourses(): void {
-    this.courses = this.coursesService.getCourses();
-    for (let i = 0; i < this.courses.length; i++) {
-      this.years.add(this.courses[i].year);
-      this.sections.add(this.courses[i].section);
-    }
+    this.coursesService.getCourses().subscribe(
+      (courses) => {
+        this.courses = courses;
+        for (const c of courses) {
+          this.years.add(c.year);
+          this.sections.add(c.section);
+        }
+      },
+      (err) => this.getCourses()
+    );
   }
 
-  hasSelect(course: Course){
+  hasSelect(course: Course) {
     if (this.selection.has(course.id)) {
       return 'true';
     } else {
@@ -84,9 +89,6 @@ export class SetupComponent implements OnInit {
   }
 
   ngOnInit() {
-    setInterval(() => {
-      console.log(this.selection);
-    }, 2000)
     const localCourses = localStorage.getItem('courses');
     if (localCourses !== null) {
       const selected = JSON.parse(localCourses);

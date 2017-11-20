@@ -8,6 +8,8 @@ import {SetupComponent} from './setup/setup.component';
 import {CoursesService} from './courses.service';
 import {FormsModule} from '@angular/forms';
 import { CoursesFilterPipe } from './setup/courses-filter.pipe';
+import {HttpClientModule} from "@angular/common/http";
+import {TcNetApiService} from "./tc-net-api.service";
 
 const appRoutes: Routes = [
   {path: 'week', component: WeekTimeTableComponent},
@@ -28,10 +30,12 @@ const appRoutes: Routes = [
       {enableTracing: true} // <-- debugging purposes only
     ),
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [
-    CoursesService
+    CoursesService,
+    TcNetApiService
   ],
   bootstrap: [AppComponent]
 })

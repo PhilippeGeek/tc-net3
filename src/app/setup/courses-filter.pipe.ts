@@ -7,11 +7,14 @@ import {Course} from '../course';
 })
 export class CoursesFilterPipe implements PipeTransform {
 
-  transform(items: Course[], filter: Object): Course[] {
+  transform(items: Set<Course>, filter: Object): Set<Course> {
     if (!items || !filter) {
       return items;
     }
-    let objects = items;
+    let objects: Course[] = [];
+    for (const course of items){
+      objects.push(course);
+    }
     for (const property in filter) {
       if (filter.hasOwnProperty(property)) {
         objects = objects.filter(item => {
@@ -26,7 +29,7 @@ export class CoursesFilterPipe implements PipeTransform {
         });
       }
     }
-    return objects;
+    return new Set(objects);
   }
 
 }
