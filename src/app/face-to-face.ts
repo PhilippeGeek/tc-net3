@@ -1,5 +1,4 @@
 import {Course} from './course';
-import moment from 'moment-timezone';
 
 export class FaceToFace {
   static COURSES: Map<string, Course> = new Map();
@@ -36,9 +35,17 @@ export class FaceToFace {
     return o;
   }
 
-  static parseDate(date: string) {
+  static parseDate(date: string){
     const regex = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4}) ([0-9]{2})h([0-9]{2})$/gm;
     const p = regex.exec(date);
-    return moment.tz(p[3] + '-' + p[2] + '-' + p[1] + ' ' + p[4] + ':' + p[5], 'Europe/Paris').toDate();
+    return new Date(
+      parseInt(p[3], 10),
+      parseInt(p[2], 10) - 1,
+      parseInt(p[1], 10),
+      parseInt(p[4], 10),
+      parseInt(p[5], 10),
+      0,
+      0
+    );
   }
 }
