@@ -18,6 +18,7 @@ export class SetupComponent implements OnInit {
   years: Set<number> = new Set();
   sections: Set<string> = new Set();
   courses: Set<Course>;
+  group: string;
   selection: Map<string, boolean> = new Map();
   filter: CourseFilter = {
     year: '4',
@@ -30,6 +31,7 @@ export class SetupComponent implements OnInit {
     ) {
     this.filter.year = localStorage.getItem('year') || '3';
     this.filter.section = localStorage.getItem('section') || 'TC';
+    this.group = localStorage.getItem('group') || 'Aucun';
   }
 
   getCourses(): void {
@@ -76,6 +78,7 @@ export class SetupComponent implements OnInit {
     localStorage.setItem('courses', JSON.stringify(courses));
     localStorage.setItem('year', this.filter.year);
     localStorage.setItem('section', this.filter.section);
+    localStorage.setItem('group', this.group);
   }
 
   selectAll() {

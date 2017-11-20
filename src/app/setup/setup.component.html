@@ -1,34 +1,49 @@
-<h1>Sélection des matières</h1>
-<div id="filter-select" class="row">
-  <div class="col-md-3">
-    <div class="form-group">
-      <label for="yearFilter">Année</label>
-      <select class="form-control" id="yearFilter" (change)="save()" [(ngModel)]="filter.year">
-        <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
-      </select>
+<h1 class="text-center">Configuration</h1>
+<div class="row">
+  <div class="col-md-9">
+    <h3>Sélection des matières</h3>
+    <div id="filter-select" class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="yearFilter">Année</label>
+          <select class="form-control" id="yearFilter" (change)="save()" [(ngModel)]="filter.year">
+            <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="sectionFilter">Section</label>
+          <select class="form-control" id="sectionFilter" (change)="save()" [(ngModel)]="filter.section">
+            <option *ngFor="let section of sections" value="{{section}}">{{section}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="selectAll">&nbsp;</label>
+          <button class="form-control" id="selectAll" (click)="selectAll()">Sélectionner tout</button>
+        </div>
+      </div>
+    </div>
+    <div id="courses-select">
+      <div class="form-check" *ngFor="let course of courses|coursesFilter:filter">
+        <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" [name]="course.id" (click)="invertState(course)"
+                 [checked]="hasSelect(course)">
+          {{course.id}}
+        </label>
+      </div>
     </div>
   </div>
   <div class="col-md-3">
+    <h3>Groupe TD</h3>
     <div class="form-group">
-      <label for="sectionFilter">Section</label>
-      <select class="form-control" id="sectionFilter" (change)="save()" [(ngModel)]="filter.section">
-        <option *ngFor="let section of sections" value="{{section}}">{{section}}</option>
+      <label for="group">Pour les années 3 et 4 en TC, sélectionnez un groupe de TP</label>
+      <select class="form-control" id="group" (change)="save()" [(ngModel)]="group">
+        <option *ngFor="let group of [1,2,3,4,'Aucun']" value="{{group}}">{{group}}</option>
       </select>
     </div>
   </div>
-  <div class="col-md-2">
-    <div class="form-group">
-      <label for="selectAll">&nbsp;</label>
-      <button class="form-control" id="selectAll" (click)="selectAll()">Sélectionner tout</button>
-    </div>
-  </div>
 </div>
-<div id="courses-select">
-  <div class="form-check" *ngFor="let course of courses|coursesFilter:filter">
-    <label class="form-check-label">
-      <input class="form-check-input" type="checkbox" [name]="course.id" (click)="invertState(course)"
-             [checked]="hasSelect(course)">
-      {{course.id}}
-    </label>
-  </div>
-</div>
+

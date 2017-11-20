@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {getDateOfISOWeek, getWeekNumber} from '../../utils/date';
 import {CoursesService} from '../courses.service';
 import {Course} from '../course';
-import {TcNetApiService} from "../tc-net-api.service";
-import {FaceToFace} from "../face-to-face";
+import {TcNetApiService} from '../tc-net-api.service';
+import {FaceToFace} from '../face-to-face';
 
 @Component({
   selector: 'app-week-time-table',
@@ -17,6 +17,7 @@ export class WeekTimeTableComponent implements OnInit {
   private studentCourses: Map<string, Course>;
   faceToFace: Set<FaceToFace>;
   ready = false;
+  group: number;
 
   static within(subject: Date, start: Date, end: Date) {
     return subject && subject.getTime() >= start.getTime() && subject.getTime() < end.getTime();
@@ -33,6 +34,7 @@ export class WeekTimeTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.group = parseInt(localStorage.getItem('group') || '1', 10);
     this.restore();
     this.courses.getStudentCourses().subscribe((courses) => {
       this.studentCourses = courses;
@@ -82,7 +84,9 @@ export class WeekTimeTableComponent implements OnInit {
   displayAt(time: Date): FaceToFace[] {
     const facings = [];
     this.faceToFace.forEach((facing) => {
-      if (WeekTimeTableComponent.within(facing.start, time, new Date(time.getTime() + 60 * 60 * 1000))) {
+      if (
+        WeekTimeTableComponent.within(facing.start, time, new Date(time.getTime() + 60 * 60 * 1000))
+      && this.feetForCurrentStudent(facing)) {
         facings.push(facing);
       }
     });
@@ -118,12 +122,25 @@ export class WeekTimeTableComponent implements OnInit {
   }
 
   prevWeek() {
-    this.date = new Date(this.date.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const [year, week] = getWeekNumber(this.date);
+    console.log(week, year);
+    this.date = getDateOfISOWeek(week - 1, year);
     localStorage.setItem('date', this.date.toDateString());
   }
 
   nextWeek() {
-    this.date = new Date(this.date.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const [year, week] = getWeekNumber(this.date);
+    this.date = getDateOfISOWeek(week + 1, year);
+    console.log(week, year);
     localStorage.setItem('date', this.date.toDateString());
+  }
+
+  private feetForCurrentStudent(facing: FaceToFace) {
+    return !!(
+      facing.group && parseInt(facing.group, 10) === this.group)
+      || !facing.group
+      || facing.course && facing.course.year && facing.course.year > 4
+      || facing.course && !facing.course.year
+      || !facing.course;
   }
 }
