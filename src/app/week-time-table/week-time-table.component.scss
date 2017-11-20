@@ -10,14 +10,63 @@
     .column-header {
       height: 6em;
       border-bottom: 1px solid black;
+
+      .navigation{
+        position:relative;
+        bottom: 0;
+        margin-top: 1em;
+      }
+
+      .weekDay, .day, .month{
+        text-align: right;
+        color: #797979;
+        padding-right: 20px;
+      }
+      .day{
+        text-align: right;
+        font-size: larger;
+      }
+      .month{
+        text-align: right;
+      }
+
     }
 
     .column-line {
       height: 4em;
+      z-index: 0;
       text-align: center;
       border-bottom: 1px solid lightgray;
-      margin-bottom: 5px;
       padding-top: 1em;
+
+      .course{
+        margin-top: -1em;
+        border: solid 1px #ddd;
+        margin-bottom: -5px;
+        z-index: 50;
+        background: #47a447;
+        color: #ffffff;
+
+        position: relative;
+        padding-top: 0.45em;
+
+        &.type-tp{
+          background: #5CB85C;
+        }
+        &.type-course{
+          background: #428BCA;
+        }
+        &.type-td{
+          background: #F0AD4E;
+        }
+
+        .details{
+          font-size: small;
+          .ens{
+            font-size: smaller;
+          }
+        }
+      }
     }
 
   }

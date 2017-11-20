@@ -1,0 +1,51 @@
+import {Course} from './course';
+
+export class FaceToFace {
+  static COURSES: Map<string, Course> = new Map();
+  name: string;
+  course: Course;
+  group: string;
+  location: string;
+  description: string;
+  theme: string;
+  ens: string[] = [];
+  type: string;
+  start: Date;
+  end: Date;
+
+  public static fromApi(f2f: any) {
+    const o = new FaceToFace();
+    o.name = f2f.name;
+    if (f2f.course) {
+      o.course = FaceToFace.COURSES.get(f2f.course.id) || new Course();
+      o.course.name = f2f.course.name;
+      o.course.year = f2f.course.year;
+      o.course.section = f2f.course.section;
+      o.course.id = f2f.course.id;
+      FaceToFace.COURSES.set(o.course.id, o.course);
+    }
+    o.group = f2f.group;
+    o.location = f2f.location;
+    o.description = f2f.description;
+    o.theme = f2f.theme;
+    o.type = f2f.type;
+    o.start = this.parseDate(f2f.start);
+    o.end = this.parseDate(f2f.end);
+    o.ens = f2f.ens;
+    return o;
+  }
+
+  static parseDate(date: string){
+    const regex = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4}) ([0-9]{2})h([0-9]{2})$/gm;
+    const p = regex.exec(date);
+    return new Date(
+      parseInt(p[3], 10),
+      parseInt(p[2], 10) - 1,
+      parseInt(p[1], 10),
+      parseInt(p[4], 10),
+      parseInt(p[5], 10),
+      0,
+      0
+    );
+  }
+}

@@ -1,20 +1,39 @@
-<div class="timetable">
+<div class="timetable" *ngIf="ready">
 
   <div class="column">
-    <div class="column-header">
-      <span>Semaine</span>
-      <span>{{asWeek(date)}}</span>
+    <div class="column-header text-center">
+      <div class="week">Semaine {{date|date:'w - y'}}</div>
+      <div class="btn-group navigation">
+          <button class="btn btn-sm btn-primary" (click)="prevWeek()">&lt; Préc.</button>
+          <button class="btn btn-sm btn-primary" (click)="nextWeek()">Suiv. &gt;</button>
+      </div>
     </div>
     <div class="column-line" *ngFor="let hour of [8,9,10,11,12,13,14,15,16,17,18,19]">
       {{hour}}h - {{hour+1}}h
     </div>
   </div>
-  <div class="column" *ngFor="let weekDay of [0,1,2,3,4]">
-    <div class="column-header">{{weekDays[weekDay]}}</div>
-    <div class="column-line" *ngFor="let hour of [8,9,10,11,12,13,14,15,16,17,18,19]">
-      ?
+  <div class="column" *ngFor="let weekDay of days()">
+    <div class="column-header">
+      <div class="weekDay">{{weekDay|date:'EEEE'}}</div>
+      <div class="day">{{weekDay|date:'d'}}</div>
+      <div class="month">{{weekDay|date:'MMMM'}}</div>
+    </div>
+    <div class="column-line" *ngFor="let hour of hoursOfDay(weekDay)">
+      <div *ngFor="let facing of displayAt(hour)">
+        <div [ngClass]="cssClassFor(facing)" [ngStyle]="{'height': heightForFacing(facing)}">
+          <div class="name">{{facing.name}}</div>
+          <div class="details">
+            <div *ngIf="facing.ens.length > 0" class="ens">({{facing.ens}})</div>
+            <div class="location">{{facing.location}}</div>
+            <div class="theme">{{facing.theme}}</div>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
 
+</div>
+<div *ngIf="!ready" class="text-center">
+  <h4>Chargement ...</h4>
 </div>
