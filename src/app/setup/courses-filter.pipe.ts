@@ -7,7 +7,7 @@ import {Course} from '../course';
 })
 export class CoursesFilterPipe implements PipeTransform {
 
-  transform(items: Course[], filter: Object): any {
+  transform(items: Course[], filter: Object): Course[] {
     if (!items || !filter) {
       return items;
     }
