@@ -3,10 +3,11 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Course} from './course';
 import {FaceToFace} from './face-to-face';
+import {environment} from '../environments/environment';
 
 @Injectable()
 export class TcNetApiService {
-  private static API_HOST: string = 'http://localhost:3000';
+  private static API_HOST: string = environment.api;
 
   constructor(private http: HttpClient) { }
 

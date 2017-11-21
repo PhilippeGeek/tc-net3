@@ -47,7 +47,7 @@ export class SetupComponent implements OnInit {
         this.filter.year = localStorage.getItem('year') || '3';
         this.filter.section = localStorage.getItem('section') || 'TC';
       },
-      (err) => this.getCourses()
+      (err) => console.error(err)
     );
   }
 

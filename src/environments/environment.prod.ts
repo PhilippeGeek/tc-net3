@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  api: 'http://tc-api.apps.philippe-vienne.fr'
 };
